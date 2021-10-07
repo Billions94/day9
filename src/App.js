@@ -1,23 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import MyNav from './component/MyNav'
+import BookList from './component/BookList'
+import MyFooter from './component/MyFooter'
+import Registration from './component/Registration'
+import { BrowserRouter as Router, Route} from 'react-router-dom'
+import "bootstrap/dist/css/bootstrap.min.css";
+import {useState} from 'react'
 
-function App() {
+const App = () => {
+
+  const [registration, setRegistration] = useState({
+    name: '',
+    surname: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+      <MyNav />
+      <Route path={'/registration'} exact render={(routerProps)=> <Registration {...routerProps} registration={registration} setRegistration={setRegistration}/>}/>
+      <Route path={"/home"} exact component={BookList}/>
+      <MyFooter />
+      </Router>
     </div>
   );
 }
